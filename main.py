@@ -1,9 +1,7 @@
-import requests
-from bs4 import BeautifulSoup
+from indeed import extract_indeed_pages
 
-indeed_result = requests.get("https://www.indeed.com/jobs?as_and=python&limit=50")
-indeed_soup = BeautifulSoup(indeed_result.text, "html.parser")
 
-print(indeed_soup)
+max_indeed_pages = extract_indeed_pages()
 
+print(max_indeed_pages)
 
