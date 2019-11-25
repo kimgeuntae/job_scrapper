@@ -19,6 +19,17 @@ def extract_indeed_pages():
     max_page = pages[-1]
     return max_page
 
+def extract_job(html):
+    title = html.find("div", {"class": "title"}).find("a")["title"]
+    company = html.find("span", {"class": "company"})
+    conpany_anchor = company.find("a")
+    if conpany_anchor is not None:
+        company = conpany_anchor.string
+    else:
+        company = company.string
+    company = company.strip()
+    return {"title": title, "company": company}
+
 def extract_indeed_jobs(last_page):
     jobs = []
     #for page in range(last_page):
@@ -26,15 +37,8 @@ def extract_indeed_jobs(last_page):
     soup = BeautifulSoup(result.text, "html.parser")
     results = soup.find_all("div", {"class": "jobsearch-SerpJobCard"})
     for result in results:
-        title = result.find("div", {"class": "title"}).find("a")["title"]
-        company = result.find("span", {"class": "company"})
-        conpany_anchor = company.find("a")
-        if conpany_anchor is not None:
-            company = conpany_anchor.string
-        else:
-            company = company.string
-        company = company.strip()
-        print(title, company)
+        job = extract_job(result)
+        print(job)
     return jobs
 
 
