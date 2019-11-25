@@ -1,5 +1,8 @@
 from indeed import get_jobs as get_indeed_jobs
+from stackover import get_jobs as get_so_jobs
 
+stackover_jobs = get_so_jobs()
 indeed_jobs = get_indeed_jobs()
 
-print(indeed_jobs)
+jobs = stackover_jobs + indeed_jobs
+print(jobs)
