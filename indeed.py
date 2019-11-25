@@ -22,12 +22,15 @@ def get_last_page():
 def extract_job(html):
     title = html.find("div", {"class": "title"}).find("a")["title"]
     company = html.find("span", {"class": "company"})
-    conpany_anchor = company.find("a")
-    if conpany_anchor is not None:
-        company = conpany_anchor.string
+    if company:
+        conpany_anchor = company.find("a")
+        if conpany_anchor is not None:
+            company = conpany_anchor.string
+        else:
+            company = company.string
+        company = company.strip()
     else:
-        company = company.string
-    company = company.strip()
+        company = None
     location = html.find("div", {"class": "recJobLoc"})["data-rc-loc"]
     job_id = html["data-jk"]
     return {"title": title, "company": company, "location": location, "link":f"https://www.indeed.com/viewjob?jk={job_id}"}
